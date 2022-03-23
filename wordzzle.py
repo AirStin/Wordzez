@@ -15,15 +15,12 @@ def readFile(dictionary, sevenletter):
 
     for line in readDict:
         line = line.lower()                 # line with no upper case characters
-        line = line.split()                 # line with each word seperate
-
-        for word in line:
-            count = 0
-            for letter in word:
-                count += 1
-
-            if count == 7:
-                writeDict.write(word)
+        line = line.split(',')                 # line with each word seperate
+        word = line[0]
+        frequency = int(line[1])
+        numchars = len(word)
+        if numchars == 7 and frequency > 4:
+            writeDict.write(word + "\n")
 
     readDict.close()
     writeDict.close()
