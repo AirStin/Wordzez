@@ -20,38 +20,43 @@ def displayWord(word, guess):
     displayedWord = []
     for letter in word:
         displayedWord += "_"
-    """
+
+    guessList = []
+
+    wordList = []
+
+    for char in guess:
+        guessList += char
+
+    for char in word:
+        wordList += char
+
     for i in range(len(guess)):
-        if guess[i] == word[i]:
-            displayedWord[i] = word[i]
-
-    wordLetterCount = 0
-    guessLetterCount = 0
-
-    for i in range(len(guess)):
-        if guess[i] in word and guess[i] != word[i]:
-            for j in range(len(word)):
-                if guess[i] == word[j]:
-                    wordLetterCount += 1
-
-            for j in range(len(displayedWord)):
-                if guess[i] == displayedWord[j] or "<" + guess[i] + ">" == displayedWord[j]:
-                    guessLetterCount += 1
-
-            if guessLetterCount < wordLetterCount:
-                displayedWord[i] = "<" + guess[i] + ">"
-    """
-    for i in range(len(word),-1):
-        if word[i] == guess[i]:
+        if guessList[i] == wordList[i]:
             displayedWord[i] = guess[i]
-            word.remove(i)
-            guess.remove(i)
-
-    for i in range(len(word), -1):
-        for j in range(len(guess)):
-            if word[i] == guess[j]:
-                displayedWord[j] = "<" + guess[j] + ">"
-                word.remove(i)
+            guessList.pop(i)
+            guessList.insert(i, "nothing")
+            wordList.pop(i)
+            wordList.insert(i, "nada")
+        else:
+            #wordCount = 0
+            #guessCount = 0
+            for j in range(len(word)):
+                #for wordList[j] in wordList:
+                    #wordCount += 1
+                #for wordList[j] in guessList:
+                    #guessCount += 1
+                if guess[i] == wordList[j]:
+                    if guess[j] == wordList[j]: #and guessCount <= wordCount:
+                        break
+                    else:
+                        displayedWord[i] = "<" + guess[i] + ">"
+                        guessList.pop(i)
+                        guessList.insert(i, "nothing")
+                        wordList.pop(j)
+                        wordList.insert(j, "nada")
+                        print(wordList)
+                        break
 
 
     return displayedWord
