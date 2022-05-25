@@ -21,51 +21,36 @@ def displayWord(word, guess):
     for letter in word:
         displayedWord += "_"
 
-    guessList = []
-
     wordList = []
 
-    for char in guess:
-        guessList += char
+    guessList = []
 
     for char in word:
         wordList += char
 
-    for i in range(len(guess)):
-        if guessList[i] == wordList[i]:
-            displayedWord[i] = guess[i]
-            guessList.pop(i)
-            guessList.insert(i, "nothing")
-            wordList.pop(i)
-            wordList.insert(i, "nada")
-        else:
-            #wordCount = 0
-            #guessCount = 0
-            for j in range(len(word)):
-                #for wordList[j] in wordList:
-                    #wordCount += 1
-                #for wordList[j] in guessList:
-                    #guessCount += 1
-                if guess[i] == wordList[j]:
-                    if guess[j] == wordList[j]: #and guessCount <= wordCount:
-                        break
-                    else:
-                        displayedWord[i] = "<" + guess[i] + ">"
-                        guessList.pop(i)
-                        guessList.insert(i, "nothing")
-                        wordList.pop(j)
-                        wordList.insert(j, "nada")
-                        print(wordList)
-                        break
+    for char in guess:
+        guessList += char
 
+    for i in range(len(guessList)):
+        if guessList[i] == wordList[i]:
+            displayedWord[i] = wordList[i]
+            wordList[i] = "nada"
+            guessList[i] = "nadie"
+
+    for i in range(len(guessList)):
+        if guessList[i] in wordList:
+            idx = wordList.index(guessList[i])
+            displayedWord[i] =  "<" + guessList[i] + ">"
+            wordList[idx] = "nada"
+            guessList[i] = "nadie"
 
     return displayedWord
 
-def getGuess():
+def getGuess(wordList):
 
     guess = input("Enter a 7 letter word: ")
     while True:
-        if len(guess) == 7 and guess.isalpha() == True:
+        if len(guess) == 7 and guess.isalpha() == True and guess in wordList:
             return(guess)
         else:
             guess = input("illegal choice; enter a 7 letter word: ")
@@ -76,14 +61,13 @@ def main():
     guesses = 0
     wordList = getWords()
     word = pickWord(wordList)
-    print(word)
 
     displayedWord = ["_", "_", "_", "_", "_", "_", "_"]
     print(displayedWord)
 
     while guesses < 7:
 
-        guess = getGuess()
+        guess = getGuess(wordList)
 
         displayedWord = displayWord(word, guess)
         print(displayedWord)
@@ -93,6 +77,9 @@ def main():
             return
 
         guesses += 1
+
+    if guess != word:
+        print("the word was " + word + "\nGod ur stoopid")
 
 
 
